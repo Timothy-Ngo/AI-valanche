@@ -8,10 +8,14 @@ public class FirstPersonCamera : MonoBehaviour
     public Transform player;
     public float mouseSensitivity = 2f;
     float cameraVerticalRotation = 0f;
+    float cameraHorizontalRotation = 0f;
+    bool lockedCursor = true; // not sure what this is used for
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -25,6 +29,11 @@ public class FirstPersonCamera : MonoBehaviour
         cameraVerticalRotation -= inputY;
         cameraVerticalRotation = Mathf.Clamp(cameraVerticalRotation, -90f, 90f);
         transform.localEulerAngles = Vector3.right * cameraVerticalRotation;
+
+        // Rotate the player around its local y axis
+        cameraHorizontalRotation += inputX;
+        cameraHorizontalRotation = Mathf.Clamp(cameraHorizontalRotation, -90f, 90f);
+        player.transform.localEulerAngles = Vector3.up * cameraHorizontalRotation;
         
     }
 }
