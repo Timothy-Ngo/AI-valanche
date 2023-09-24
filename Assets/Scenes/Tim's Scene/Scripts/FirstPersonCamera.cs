@@ -11,11 +11,17 @@ public class FirstPersonCamera : MonoBehaviour
     public float cameraHorizontalRotation = 0f;
     bool lockedCursor = true; // not sure what this is used for
 
+    float cameraHorizontalRotationY;
+    float cameraHorizontalRotationZ;
+
     // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Locked;
+
+        cameraHorizontalRotationY = cameraHorizontalRotation - 90f;
+        cameraHorizontalRotationZ = cameraHorizontalRotation + 90f;
     }
 
     // Update is called once per frame
@@ -32,7 +38,7 @@ public class FirstPersonCamera : MonoBehaviour
 
         // Rotate the player around its local y axis
         cameraHorizontalRotation += inputX;
-        cameraHorizontalRotation = Mathf.Clamp(cameraHorizontalRotation, -90f, 90f);
+        cameraHorizontalRotation = Mathf.Clamp(cameraHorizontalRotation, cameraHorizontalRotationY, cameraHorizontalRotationZ);
         player.transform.localEulerAngles = Vector3.up * cameraHorizontalRotation;
         
     }

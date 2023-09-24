@@ -1791,6 +1791,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 476885793}
   mouseSensitivity: 2
+  cameraVerticalRotation: 0
+  cameraHorizontalRotation: 0
 --- !u!81 &253046576
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2634,7 +2636,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339046278}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3618,7 +3620,7 @@ Transform:
   - {fileID: 339046279}
   - {fileID: 253046574}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 32.178, y: 0, z: 0}
 --- !u!1001 &483655808
 PrefabInstance:
@@ -6626,7 +6628,7 @@ RectTransform:
   m_Children:
   - {fileID: 302483541}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6965,6 +6967,7 @@ MonoBehaviour:
     p2: 04000000040000000400000004000000040000000400000000000000
     canP1MoveAgain: 0
     canP2MoveAgain: 0
+    spawnInterval: 0.15
 --- !u!4 &988968552
 Transform:
   m_ObjectHideFlags: 0
@@ -7637,7 +7640,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1067632596}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -9501,7 +9504,7 @@ Transform:
   - {fileID: 1067632597}
   - {fileID: 1338102562}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 32.178, y: 180, z: 0}
 --- !u!1001 &1187998800
 PrefabInstance:
@@ -10252,7 +10255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4713505751311242, guid: 254284ef6ad127146a9a7b2c296f4058, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4713505751311242, guid: 254284ef6ad127146a9a7b2c296f4058, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10522,7 +10525,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1338102562}
   - component: {fileID: 1338102565}
-  - component: {fileID: 1338102564}
   - component: {fileID: 1338102563}
   m_Layer: 0
   m_Name: Main Camera
@@ -10560,14 +10562,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1186564280}
   mouseSensitivity: 2
---- !u!81 &1338102564
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1338102561}
-  m_Enabled: 1
+  cameraVerticalRotation: 0
+  cameraHorizontalRotation: 180
 --- !u!20 &1338102565
 Camera:
   m_ObjectHideFlags: 0
@@ -16446,7 +16442,7 @@ Transform:
   - {fileID: 2031263805}
   - {fileID: 1886547754}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 22.825, z: 0}
 --- !u!1 &2078949728
 GameObject:
