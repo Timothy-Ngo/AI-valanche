@@ -17,7 +17,7 @@ public class Stone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("Howdy");
 
         //transform.position = MathParabola.Parabola(transform.position, endPosition, 
     }
