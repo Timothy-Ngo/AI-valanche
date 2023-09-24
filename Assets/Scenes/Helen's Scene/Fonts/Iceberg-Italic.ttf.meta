@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 0d7314d41e7679c498cae0cf5632ddd5
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Iceberg
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 0490341f7292575488e2ac804b390bf2, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
