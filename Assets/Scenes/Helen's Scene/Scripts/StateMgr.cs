@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class StateMgr : MonoBehaviour
 {
+    public static StateMgr inst;
 
+    private void Awake()
+    {
+        inst = this;
+    }
     // current state initialized to starting board state
     public State currentState;
 
@@ -16,14 +21,14 @@ public class StateMgr : MonoBehaviour
         //PrintState(currentState);
 
         //Debug.Log("game ends: " + currentState.CheckEndGame());
-        currentState.P2Move(0);
         //currentState.P2Move(0);
-        Debug.Log("can move again: " + currentState.canP2MoveAgain);
+        //currentState.P2Move(0);
+        //Debug.Log("can move again: " + currentState.canP2MoveAgain);
         //currentState.GetValidMoves(currentState.p1);
 
         //PrintValidMoves(currentState);
         //Debug.Log(currentState.WhoWon());
-        PrintState(currentState);
+        //PrintState(currentState);
     }
 
     // Update is called once per frame
