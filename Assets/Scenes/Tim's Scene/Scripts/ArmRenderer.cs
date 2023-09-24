@@ -20,7 +20,6 @@ public class ArmRenderer : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Debug.Log("Mouse click");
             if (!armIsForward){
                 MoveArmForward();
             }

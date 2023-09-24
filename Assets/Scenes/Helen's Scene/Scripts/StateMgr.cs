@@ -158,8 +158,11 @@ public class State
         return validMoves;
     }
 
+    public float spawnInterval = 0.15f;
     public void P1Move(int indexOfPit) // When passing in index check to make sure pit is not empty
     {
+        float spawnDuration = 0;
+
         if (indexOfPit == 6)
         {
             Debug.Log("Cannot move stones out of store");
@@ -171,9 +174,9 @@ public class State
             Debug.Log("No stones to move");
             return;
         }
-        
+        GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
         p1[indexOfPit] = 0;
-
+        GameMgr.inst.p1Pits[indexOfPit].DelayedClearPit(spawnDuration += spawnInterval);
 
         // goes through player 1's side
         for (int i = indexOfPit + 1; i < p1.Length; i++) // while nextIndex < 7
@@ -183,18 +186,20 @@ public class State
             {
                 // drops a stone
                 numStones--;
-                p1[i]++; 
+                p1[i]++;
+                GameMgr.inst.p1Pits[i].DelayedAddStone(spawnDuration += spawnInterval);
             }
 
             // if holding no stones
             if (numStones == 0) 
             {
                 // if current pit has stones
-                if (p1[i] > 1) // checks for >1 since pit will always have at least 1 stone from dropping one in earlier
+                if (p1[i] > 1 && i != 6) // checks for >1 since pit will always have at least 1 stone from dropping one in earlier
                 {
                     // pick up stones from current pit
                     numStones = p1[i];
                     p1[i] = 0;
+                    GameMgr.inst.p1Pits[i].DelayedClearPit(spawnDuration += spawnInterval);
                 }
                 else
                 {
@@ -203,6 +208,11 @@ public class State
                     {
                         canP1MoveAgain = true;
                     }
+                    else
+                    {
+                        GameMgr.inst.player = 2;
+                    }
+                    GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
                     return;
                 }
                 
@@ -223,6 +233,7 @@ public class State
                     // drops stone
                     numStones--;
                     p2[i]++;
+                    GameMgr.inst.p2Pits[i].DelayedAddStone(spawnDuration += spawnInterval);
                 }
 
                 // if holding no stones
@@ -234,9 +245,12 @@ public class State
                         // pick up stones from current pit
                         numStones = p2[i];
                         p2[i] = 0;
+                        GameMgr.inst.p2Pits[i].DelayedClearPit(spawnDuration += spawnInterval);
                     }
                     else
                     {
+                        GameMgr.inst.player = 2;
+                        GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
                         return;
                     }
                     
@@ -255,17 +269,19 @@ public class State
                     // drop a stone
                     numStones--;
                     p1[i]++;
+                    GameMgr.inst.p1Pits[i].DelayedAddStone(spawnDuration += spawnInterval);
                 }
 
                 // if holding no stones
                 if (numStones == 0) // checks if pit has one stone since we dropped one in earlier
                 {
                     // if current pit has stones
-                    if (p1[i] > 1) // checks for >1 since pit will always have at least 1 stone from dropping one in earlier
+                    if (p1[i] > 1 && i != 6) // checks for >1 since pit will always have at least 1 stone from dropping one in earlier
                     {
                         // pick up stones from current pit
                         numStones = p1[i];
                         p1[i] = 0;
+                        GameMgr.inst.p1Pits[i].DelayedClearPit(spawnDuration += spawnInterval);
                     }
                     else
                     {
@@ -274,6 +290,11 @@ public class State
                         {
                             canP1MoveAgain = true;
                         }
+                        else
+                        {
+                            GameMgr.inst.player = 2;
+                        }
+                        GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
                         return;
                     }
                   
@@ -289,7 +310,7 @@ public class State
 
     public void P2Move(int indexOfPit) // When passing in index check to make sure pit is not empty
     {
-
+        float spawnDuration = 0;
 
         if (indexOfPit == 6)
         {
@@ -302,9 +323,10 @@ public class State
             Debug.Log("No stones to move");
             return;
         }
+        GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
 
         p2[indexOfPit] = 0;
-
+        GameMgr.inst.p2Pits[indexOfPit].DelayedClearPit(spawnDuration += spawnInterval);
 
         // goes through player 2's side
         for (int i = indexOfPit + 1; i < p2.Length; i++) // while nextIndex < 7
@@ -315,17 +337,19 @@ public class State
                 // drops a stone
                 numStones--;
                 p2[i]++;
+                GameMgr.inst.p2Pits[i].DelayedAddStone(spawnDuration += spawnInterval);
             }
 
             // if holding no stones
             if (numStones == 0)
             {
                 // if current pit has stones
-                if (p2[i] > 1) // checks for >1 since pit will always have at least 1 stone from dropping one in earlier
+                if (p2[i] > 1 && i != 6) // checks for >1 since pit will always have at least 1 stone from dropping one in earlier
                 {
                     // pick up stones from current pit
                     numStones = p2[i];
                     p2[i] = 0;
+                    GameMgr.inst.p2Pits[i].DelayedClearPit(spawnDuration += spawnInterval);
                 }
                 else
                 {
@@ -334,6 +358,11 @@ public class State
                     {
                         canP2MoveAgain = true;
                     }
+                    else
+                    {
+                        GameMgr.inst.player = 1;
+                    }
+                    GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
                     return;
                 }
 
@@ -354,6 +383,7 @@ public class State
                     // drops stone
                     numStones--;
                     p1[i]++;
+                    GameMgr.inst.p1Pits[i].DelayedAddStone(spawnDuration += spawnInterval);
                 }
 
                 // if holding no stones
@@ -365,9 +395,12 @@ public class State
                         // pick up stones from current pit
                         numStones = p1[i];
                         p1[i] = 0;
+                        GameMgr.inst.p1Pits[i].DelayedClearPit(spawnDuration += spawnInterval);
                     }
                     else
                     {
+                        GameMgr.inst.player = 1;
+                        GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
                         return;
                     }
 
@@ -386,17 +419,19 @@ public class State
                     // drop a stone
                     numStones--;
                     p2[i]++;
+                    GameMgr.inst.p2Pits[i].DelayedAddStone(spawnDuration += spawnInterval);
                 }
 
                 // if holding no stones
                 if (numStones == 0) // checks if pit has one stone since we dropped one in earlier
                 {
                     // if current pit has stones
-                    if (p2[i] > 1) // checks for >1 since pit will always have at least 1 stone from dropping one in earlier
+                    if (p2[i] > 1 && i != 6) // checks for >1 since pit will always have at least 1 stone from dropping one in earlier
                     {
                         // pick up stones from current pit
                         numStones = p2[i];
                         p2[i] = 0;
+                        GameMgr.inst.p2Pits[i].DelayedClearPit(spawnDuration += spawnInterval);
                     }
                     else
                     {
@@ -405,6 +440,11 @@ public class State
                         {
                             canP2MoveAgain = true;
                         }
+                        else
+                        {
+                            GameMgr.inst.player = 1;
+                        }
+                        GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
                         return;
                     }
 
@@ -413,6 +453,7 @@ public class State
 
         }
 
+        
 
 
     }
