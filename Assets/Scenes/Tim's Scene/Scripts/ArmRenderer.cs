@@ -20,14 +20,15 @@ public class ArmRenderer : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (!armIsForward){
-                MoveArmForward();
-            }
-            else
-            {
-                MoveArmBack();
-            }
+            MoveArmForward();
+            StartCoroutine(DelayedMoveArmBack());
         }
+    }
+
+    IEnumerator DelayedMoveArmBack()
+    {
+        yield return new WaitForSeconds(0.5f);
+        MoveArmBack();
     }
 
     public void MoveArmForward()

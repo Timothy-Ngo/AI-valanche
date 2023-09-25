@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.SceneManagement;
 using UnityEngine;
+using TMPro;
 
 public class Pit : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Pit : MonoBehaviour
     public List<GameObject> renderedStones;
 
     public float initSpawnInterval = 1f;
+
+    public TextMeshProUGUI numStonesText;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +72,7 @@ public class Pit : MonoBehaviour
     {
         numberOfStones++;
         renderedStones.Add(Instantiate(stonePrefabs[Random.Range(0,stonePrefabs.Count)], transform));
+        numStonesText.text = numberOfStones.ToString();
     }
 
     public void DelayedClearPit(float delay)
@@ -89,5 +93,6 @@ public class Pit : MonoBehaviour
             numberOfStones--;
         }
         renderedStones = new List<GameObject>();
+        numStonesText.text = "0";
     }
 }
