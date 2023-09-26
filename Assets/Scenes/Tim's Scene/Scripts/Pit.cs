@@ -19,6 +19,7 @@ public class Pit : MonoBehaviour
 
     public TextMeshProUGUI numStonesText;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +50,7 @@ public class Pit : MonoBehaviour
         {
             StartCoroutine(DelayedSpawn(i));
         }
-        
+
     }
 
     IEnumerator DelayedSpawn(float delay)
