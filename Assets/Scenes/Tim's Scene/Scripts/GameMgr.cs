@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class GameMgr : MonoBehaviour
@@ -22,6 +23,7 @@ public class GameMgr : MonoBehaviour
     [Header("Game Mechanics")]
     public int player = 1;
     public bool moveInAction = false;
+    public FirstPersonCamera fpc;
     
 
     [Header("State Renderer Settings")]
@@ -57,7 +59,16 @@ public class GameMgr : MonoBehaviour
                 }
             }
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            EndGame(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            EndGame(2);
+        }
+
     }
 
     public bool SendOutRayCast()
@@ -101,7 +112,19 @@ public class GameMgr : MonoBehaviour
     }
 
 
-
+    public void EndGame(int winner)
+    {
+        if (winner == 1)
+        {
+            fpc.ReleaseCursor();
+            SceneMgr.inst.ChangeSceneToEndGame("Player 1 Win Screen");
+        }
+        else if (winner == 2)
+        {
+            fpc.ReleaseCursor();
+            SceneMgr.inst.ChangeSceneToEndGame("Player 2 Win Screen");
+        }
+    }
 
 
 }

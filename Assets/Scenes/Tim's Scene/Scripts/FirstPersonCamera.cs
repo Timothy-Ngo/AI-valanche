@@ -9,7 +9,7 @@ public class FirstPersonCamera : MonoBehaviour
     public float mouseSensitivity = 2f;
     public float cameraVerticalRotation = 0f;
     public float cameraHorizontalRotation = 0f;
-    bool lockedCursor = true; // not sure what this is used for
+
 
     float cameraHorizontalRotationY;
     float cameraHorizontalRotationZ;
@@ -41,5 +41,16 @@ public class FirstPersonCamera : MonoBehaviour
         cameraHorizontalRotation = Mathf.Clamp(cameraHorizontalRotation, cameraHorizontalRotationY, cameraHorizontalRotationZ);
         player.transform.localEulerAngles = Vector3.up * cameraHorizontalRotation;
         
+    }
+
+    public void ChangePlayerTransform(Transform newPlayer)
+    {
+        player = newPlayer;
+    }
+
+    public void ReleaseCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 }

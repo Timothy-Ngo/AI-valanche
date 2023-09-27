@@ -119,7 +119,7 @@ public class State
             return 0; // The game is a draw
         }
     }
-    public bool CheckEndGame()
+    public void CheckEndGame()
     {
         bool p1Empty = true;
         bool p2Empty = true;
@@ -142,7 +142,14 @@ public class State
             }
         }
 
-        return p1Empty || p2Empty;
+        if (p1Empty || p2Empty)
+        {
+            GameMgr.inst.EndGame(WhoWon());
+        }
+        else
+        {
+            return;
+        }
     }
 
     public List<int> GetValidMoves(int[] player)
@@ -211,8 +218,10 @@ public class State
                     else
                     {
                         GameMgr.inst.player = 2;
+                        CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
                     }
                     GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
+                    CheckEndGame();
                     return;
                 }
                 
@@ -250,7 +259,9 @@ public class State
                     else
                     {
                         GameMgr.inst.player = 2;
+                        CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
                         GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
+                        CheckEndGame();
                         return;
                     }
                     
@@ -293,8 +304,10 @@ public class State
                         else
                         {
                             GameMgr.inst.player = 2;
+                            CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
                         }
                         GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
+                        CheckEndGame();
                         return;
                     }
                   
@@ -361,8 +374,10 @@ public class State
                     else
                     {
                         GameMgr.inst.player = 1;
+                        CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
                     }
                     GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
+                    CheckEndGame();
                     return;
                 }
 
@@ -400,7 +415,9 @@ public class State
                     else
                     {
                         GameMgr.inst.player = 1;
+                        CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
                         GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
+                        CheckEndGame();
                         return;
                     }
 
@@ -443,8 +460,10 @@ public class State
                         else
                         {
                             GameMgr.inst.player = 1;
+                            CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
                         }
                         GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
+                        CheckEndGame();
                         return;
                     }
 
