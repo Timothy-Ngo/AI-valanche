@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class StateMgr : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class StateMgr : MonoBehaviour
     void Start()
     {
         currentState = new State();
-
+        
         //PrintState(currentState);
 
         //Debug.Log("game ends: " + currentState.CheckEndGame());
@@ -30,11 +31,14 @@ public class StateMgr : MonoBehaviour
         //Debug.Log(currentState.WhoWon());
         //PrintState(currentState);
     }
-
+    
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Debug.Log(currentState.CheckEndState());
+        }
     }
 
 
@@ -92,6 +96,19 @@ public class State
         p1 = new int[7] { 4,4,4,4,4,4,0 };
 
         p2 = new int[7] { 4,4,4,4,4,4,0 };
+    }
+
+    public State(State state)
+    {
+        p1 = new int[7] { 4, 4, 4, 4, 4, 4, 0 };
+
+        p2 = new int[7] { 4, 4, 4, 4, 4, 4, 0 };
+
+        Array.Copy(state.p1, p1, p1.Length);
+        Array.Copy(state.p2, p2, p2.Length);
+
+        canP1MoveAgain = state.canP1MoveAgain;
+        canP2MoveAgain = state.canP2MoveAgain;
     }
     
     
@@ -152,6 +169,31 @@ public class State
         }
     }
 
+    public bool CheckEndState()
+    {
+        bool p1Empty = true;
+        bool p2Empty = true;
+        for (int i = 0; i < p1.Length - 1; i++)
+        {
+            if (p1[i] > 0)
+            {
+                p1Empty = false;
+                break;
+            }
+        }
+
+        for (int i = 0; i < p2.Length - 1; i++)
+        {
+            if (p2[i] > 0)
+            {
+                p2Empty = false;
+                break;
+            }
+        }
+
+        return p1Empty || p2Empty;
+    }
+
     public List<int> GetValidMoves(int[] player)
     {
         List<int> validMoves = new List<int>();
@@ -165,7 +207,7 @@ public class State
         return validMoves;
     }
 
-    public float spawnInterval = 0.15f;
+    public float spawnInterval = 0.05f;
     public void P1Move(int indexOfPit) // When passing in index check to make sure pit is not empty
     {
         float spawnDuration = 0;
@@ -476,4 +518,7 @@ public class State
 
 
     }
+
+    
+
 }
