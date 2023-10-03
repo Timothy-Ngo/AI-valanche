@@ -19,8 +19,6 @@ public class MinimaxAI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             Debug.Log("key pressed");
-            //Debug.Log(StaticEvaluator(StateMgr.inst.currentState));
-            //StateMgr.inst.PrintState(MoveP2(0, StateMgr.inst.currentState));
             FindEvalutor(StateMgr.inst.currentState, ply, false);
 
         }

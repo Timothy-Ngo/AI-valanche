@@ -9,8 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Scene/Main Menu.unity
     guid: 820517d27cb1e494690637f72983c23a
   - enabled: 1
+    path: Assets/Scenes/Main Scene/Difficulty Selector.unity
+    guid: 50199b4339a526e4bbd583b4edb950c5
+  - enabled: 1
     path: Assets/Scenes/Main Scene/Main Scene.unity
     guid: 7ff9cc5a5e2ddc54a8e2afb488f61bb8
+  - enabled: 1
+    path: Assets/Scenes/Main Scene/Play Against AI.unity
+    guid: 39fc9183f7312b548bde3e5ed0ae56ca
   - enabled: 1
     path: Assets/Scenes/Main Scene/Player 1 Win Screen.unity
     guid: 1ac730ac0f2bdff46b365fad9abb49a2

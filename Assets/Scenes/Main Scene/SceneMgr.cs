@@ -22,6 +22,15 @@ public class SceneMgr : MonoBehaviour
         SceneManager.LoadScene("Main Scene");
     }
 
+    public void ChangeSceneToDifficultySelector()
+    {
+        SceneManager.LoadScene("Difficulty Selector");
+    }
+    public void ChangeSceneToPlayAgainstAI()
+    {
+        SceneManager.LoadScene("Play Against AI");
+    }
+
     public void ChangeSceneToEndGame(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
