@@ -12579,7 +12579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34db5356fc25ada4696f4e6a20d62704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ply: 1
+  ply: 6
   moveAgainWeight: 100
 --- !u!4 &919782238
 Transform:

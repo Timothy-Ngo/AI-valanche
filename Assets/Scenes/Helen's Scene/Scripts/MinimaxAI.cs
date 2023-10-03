@@ -147,6 +147,10 @@ public class MinimaxAI : MonoBehaviour
                 }
                 staticEvaluator = maxEval + moveAgainWeight;
             }
+            else
+            {
+                staticEvaluator -= (moveAgainWeight / 2);
+            }
         } 
         else
         {
@@ -160,6 +164,10 @@ public class MinimaxAI : MonoBehaviour
                     minEval = Mathf.Min(minEval, eval);
                 }
                 staticEvaluator = minEval - moveAgainWeight;
+            }
+            else
+            {
+                staticEvaluator += (moveAgainWeight / 2);
             }
         }
         //Debug.Log("inside static evaluator: " + staticEvaluator);
