@@ -18205,7 +18205,7 @@ RectTransform:
   m_Children:
   - {fileID: 1139541346}
   m_Father: {fileID: 1829651986}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -18258,7 +18258,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 562254620}
         m_TargetAssemblyTypeName: SceneMgr, Assembly-CSharp
-        m_MethodName: ChangeSceneToModeSelector
+        m_MethodName: ChangeSceneToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -23601,8 +23601,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1352496144}
-  - {fileID: 1411372142}
   - {fileID: 2015804737}
+  - {fileID: 1411372142}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -54.58, z: 0}
@@ -26468,7 +26468,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1829651986}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -26524,7 +26524,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42.55
+  m_fontSize: 48.7
   m_fontSizeBase: 120
   m_fontWeight: 400
   m_enableAutoSizing: 1
