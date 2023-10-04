@@ -207,7 +207,8 @@ public class State
         return validMoves;
     }
 
-    public float spawnInterval = 0.05f;
+    public float spawnInterval = 0.15f;
+
     public void P1Move(int indexOfPit) // When passing in index check to make sure pit is not empty
     {
         float spawnDuration = 0;
