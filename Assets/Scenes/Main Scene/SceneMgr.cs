@@ -21,10 +21,26 @@ public class SceneMgr : MonoBehaviour
     {
         SceneManager.LoadScene("Main Scene");
     }
-
+    public void ChangeSceneToHowToPlay()
+    {
+        SceneManager.LoadScene("How To Play");
+    }
+    public void ChangeSceneToCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+    public void ChangeSceneToTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
     public void ChangeSceneToDifficultySelector()
     {
         SceneManager.LoadScene("Difficulty Selector");
+    }
+
+    public void ChangeSceneToModeSelector()
+    {
+        SceneManager.LoadScene("Mode Selector");
     }
     public void ChangeSceneToPlayAgainstAI()
     {
@@ -43,5 +59,13 @@ public class SceneMgr : MonoBehaviour
     public void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void QuitGame()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+        Application.Quit();
     }
 }
