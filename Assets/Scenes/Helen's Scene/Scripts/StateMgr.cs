@@ -93,9 +93,9 @@ public class State
 
     public State()
     {
-        p1 = new int[7] { 4,4,4,4,4,4,0 };
+        p1 = new int[7] { 4, 4, 4, 4, 4, 4, 0 };
 
-        p2 = new int[7] { 4,4,4,4,4,4,0 };
+        p2 = new int[7] { 4, 4, 4, 4, 4, 4, 0 };
     }
 
     public State(State state)
@@ -110,8 +110,8 @@ public class State
         canP1MoveAgain = state.canP1MoveAgain;
         canP2MoveAgain = state.canP2MoveAgain;
     }
-    
-    
+
+
     public int GetP1Score()
     {
         return p1[6];
@@ -136,7 +136,9 @@ public class State
             return 0; // The game is a draw
         }
     }
-    public void CheckEndGame()
+
+    
+    public void CheckEndGame(float delay)
     {
         bool p1Empty = true;
         bool p2Empty = true;
@@ -159,9 +161,9 @@ public class State
             }
         }
 
-        if (p1Empty || p2Empty)
+        if (p1Empty || p2Empty || p1[6] >= 25 || p2[6] >= 25)
         {
-            GameMgr.inst.EndGame(WhoWon());
+            GameMgr.inst.DelayedEndGame(delay, WhoWon());
         }
         else
         {
@@ -191,7 +193,8 @@ public class State
             }
         }
 
-        return p1Empty || p2Empty;
+
+        return p1Empty || p2Empty || p1[6] >= 25 || p2[6] >= 25;
     }
 
     public List<int> GetValidMoves(int[] player)
@@ -207,10 +210,14 @@ public class State
         return validMoves;
     }
 
-    public float spawnInterval = 0.15f;
+    public float spawnInterval = 0.05f;
 
     public void P1Move(int indexOfPit) // When passing in index check to make sure pit is not empty
     {
+        if (canP1MoveAgain)
+        {
+            canP1MoveAgain = false;
+        }
         float spawnDuration = 0;
 
         if (indexOfPit == 6)
@@ -261,10 +268,26 @@ public class State
                     else
                     {
                         GameMgr.inst.player = 2;
-                        CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
+                        
+                        if (!GameMgr.inst.againstAI)
+                        { 
+                            CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
+                        }
                     }
                     GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
-                    CheckEndGame();
+                    if (CheckEndState())
+                    {
+                        CheckEndGame(spawnDuration += spawnInterval + 1);
+                    }
+                    else
+                    {
+                        
+                        if (GameMgr.inst.againstAI && !canP1MoveAgain)
+                        {
+                            Debug.Log("Against AI");
+                            GameMgr.inst.DelayedPlayAgainstAI(spawnDuration += spawnInterval + 1);
+                        }
+                    }
                     return;
                 }
                 
@@ -302,9 +325,24 @@ public class State
                     else
                     {
                         GameMgr.inst.player = 2;
-                        CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
+                        
+                        if (!GameMgr.inst.againstAI)
+                        {
+                            CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
+                        }
                         GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
-                        CheckEndGame();
+                        if (CheckEndState())
+                        {
+                            CheckEndGame(spawnDuration += spawnInterval + 1);
+                        }
+                        else
+                        {
+                            if (GameMgr.inst.againstAI)
+                            {
+                                
+                                GameMgr.inst.DelayedPlayAgainstAI(spawnDuration += spawnInterval + 1);
+                            }
+                        }
                         return;
                     }
                     
@@ -347,10 +385,24 @@ public class State
                         else
                         {
                             GameMgr.inst.player = 2;
-                            CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
+                            if (!GameMgr.inst.againstAI)
+                            {
+                                CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
+                            }
                         }
                         GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
-                        CheckEndGame();
+                        if (CheckEndState())
+                        {
+                            CheckEndGame(spawnDuration += spawnInterval + 1);
+                        }
+                        else
+                        {
+                            if (GameMgr.inst.againstAI && !canP1MoveAgain)
+                            {
+                                Debug.Log("Against AI");
+                                GameMgr.inst.DelayedPlayAgainstAI(spawnDuration += spawnInterval + 1);
+                            }
+                        }
                         return;
                     }
                   
@@ -366,6 +418,10 @@ public class State
 
     public void P2Move(int indexOfPit) // When passing in index check to make sure pit is not empty
     {
+        if (canP2MoveAgain)
+        {
+            canP2MoveAgain = false;
+        }
         float spawnDuration = 0;
 
         if (indexOfPit == 6)
@@ -417,10 +473,24 @@ public class State
                     else
                     {
                         GameMgr.inst.player = 1;
-                        CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
+                        if (!GameMgr.inst.againstAI)
+                        {
+                            CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
+                        }
                     }
                     GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
-                    CheckEndGame();
+                    if (CheckEndState())
+                    {
+                        CheckEndGame(spawnDuration += spawnInterval + 1);
+                    }
+                    else
+                    {
+                        if (GameMgr.inst.againstAI && canP2MoveAgain)
+                        {
+                            GameMgr.inst.DelayedPlayAgainstAI(spawnDuration += spawnInterval + 1);
+                            canP2MoveAgain = false;
+                        }
+                    }
                     return;
                 }
 
@@ -458,9 +528,12 @@ public class State
                     else
                     {
                         GameMgr.inst.player = 1;
-                        CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
+                        if (!GameMgr.inst.againstAI)
+                        {
+                            CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
+                        }
                         GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
-                        CheckEndGame();
+                        CheckEndGame(spawnDuration += spawnInterval + 1);
                         return;
                     }
 
@@ -503,10 +576,24 @@ public class State
                         else
                         {
                             GameMgr.inst.player = 1;
-                            CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
+                            if (!GameMgr.inst.againstAI)
+                            {
+                                CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
+                            }
                         }
                         GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
-                        CheckEndGame();
+                        if (CheckEndState())
+                        {
+                            CheckEndGame(spawnDuration += spawnInterval + 1);
+                        }
+                        else
+                        {
+                            if (GameMgr.inst.againstAI && canP2MoveAgain)
+                            {
+                                GameMgr.inst.DelayedPlayAgainstAI(spawnDuration += spawnInterval + 1);
+                                canP2MoveAgain = false;
+                            }
+                        }
                         return;
                     }
 

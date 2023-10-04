@@ -50,6 +50,7 @@ public class CameraMgr : MonoBehaviour
         }
         armRenderer.ChangeActiveArm();
         UIMgr.inst.FlipNumbers();
+        UIMgr.inst.UpdatePlayerTurnUI();
     }
 
     

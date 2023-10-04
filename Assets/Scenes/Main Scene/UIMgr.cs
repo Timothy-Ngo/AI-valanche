@@ -22,7 +22,7 @@ public class UIMgr : MonoBehaviour
         //Debug.Log(p1pit0Transform.rotation);
         //p1pit0Transform.Rotate(0f, 0f, 180f, Space.Self);
         //FlipNumbers();
-        
+        UpdatePlayerTurnUI();
     }
 
     // Update is called once per frame
@@ -41,5 +41,10 @@ public class UIMgr : MonoBehaviour
         }
     }
 
-
+    public TextMeshProUGUI playerTurnUI;
+    public void UpdatePlayerTurnUI()
+    {
+        playerTurnUI.text = "Player " + GameMgr.inst.player;
+    }
+    
 }

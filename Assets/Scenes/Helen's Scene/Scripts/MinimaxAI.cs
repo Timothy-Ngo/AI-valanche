@@ -19,13 +19,13 @@ public class MinimaxAI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             Debug.Log("key pressed");
-            FindEvalutor(StateMgr.inst.currentState, ply, false);
+            FindEvaluator(StateMgr.inst.currentState, ply, false);
 
         }
     }
     private int maxValue = int.MaxValue;
     public int ply = 2;
-    public void FindEvalutor(State currentState, int depth, bool maximizingPlayer)
+    public void FindEvaluator(State currentState, int depth, bool maximizingPlayer)
     {
         Dictionary<int, int> indexEvalMap = new Dictionary<int, int>();
         if (maximizingPlayer)
@@ -34,6 +34,7 @@ public class MinimaxAI : MonoBehaviour
             {
                 if (currentState.p1[i] != 0)
                 {
+                    Debug.Log($"Depth: {depth}");
                     indexEvalMap[i] = Minimax(MoveP1(i, currentState), depth, -maxValue, maxValue, true);
                 }
             }
@@ -44,24 +45,47 @@ public class MinimaxAI : MonoBehaviour
             {
                 if (currentState.p2[i] != 0)
                 {
+                    Debug.Log($"Depth: {depth}");
                     indexEvalMap[i] = Minimax(MoveP2(i, currentState), depth, -maxValue, maxValue, false);
                 }
             }
         }
 
-        int minVal = int.MaxValue;
-        int minIndex = 0;
-        foreach(int index in indexEvalMap.Keys)
+
+        if (maximizingPlayer)
         {
-            Debug.Log("index: " + index + ", eval: " + indexEvalMap[index]);
-            if (indexEvalMap[index] <= minVal)
+            int maxVal = int.MinValue;
+            int maxIndex = 0;
+            foreach(int index in indexEvalMap.Keys)
             {
-                minVal = indexEvalMap[index];
-                minIndex = index;
+                Debug.Log("index: " + index + ", eval: " + indexEvalMap[index]);
+                if (indexEvalMap[index] >= maxVal)
+                {
+                    maxVal = indexEvalMap[index];
+                    maxIndex = index;
+                }
             }
+            Debug.Log($"maxIndex chosen: {maxIndex}");
+            StateMgr.inst.currentState.P2Move(maxIndex);
+
+        }
+        else
+        {
+            int minVal = int.MaxValue;
+            int minIndex = 0;
+            foreach(int index in indexEvalMap.Keys)
+            {
+                Debug.Log("index: " + index + ", eval: " + indexEvalMap[index]);
+                if (indexEvalMap[index] <= minVal)
+                {
+                    minVal = indexEvalMap[index];
+                    minIndex = index;
+                }
+            }
+            Debug.Log($"minIndex chosen: {minIndex}");
+            StateMgr.inst.currentState.P2Move(minIndex);
         }
 
-        StateMgr.inst.currentState.P2Move(minIndex);
         /*
         List<State> childStates = GetChildStates(currentState, maximizingPlayer);
         List<int> evaluators = new List<int>();
@@ -96,33 +120,73 @@ public class MinimaxAI : MonoBehaviour
 
         if (maximizingPlayer)
         {
-            int maxEval = -maxValue;
-            foreach(State childState in GetChildStates(currentState, !maximizingPlayer))
+            if (currentState.canP2MoveAgain)
             {
-                int eval = Minimax(childState, depth - 1, alpha, beta, false);
-                maxEval = Mathf.Max(maxEval, eval);
-                alpha = Mathf.Max(alpha, eval);
-                if (beta <= alpha)
+                currentState.canP2MoveAgain = false;
+                int minEval = maxValue;
+                foreach (State childState in GetChildStates(currentState, !maximizingPlayer))
                 {
-                    break;
+                    int eval = Minimax(childState, depth - 1, alpha, beta, true);
+                    minEval = Mathf.Min(minEval, eval);
+                    beta = Mathf.Min(beta, eval);
+                    if (beta <= alpha)
+                    {
+                        break;
+                    }
                 }
+                return minEval;
             }
-            return maxEval;
+            else
+            {
+                int maxEval = -maxValue;
+                foreach (State childState in GetChildStates(currentState, !maximizingPlayer))
+                {
+                    int eval = Minimax(childState, depth - 1, alpha, beta, false);
+                    maxEval = Mathf.Max(maxEval, eval);
+                    alpha = Mathf.Max(alpha, eval);
+                    if (beta <= alpha)
+                    {
+                        break;
+                    }
+                }
+                return maxEval;
+            }
+           
         }
         else
         {
-            int minEval = maxValue;
-            foreach(State childState in GetChildStates(currentState, !maximizingPlayer))
+            if (currentState.canP1MoveAgain)
             {
-                int eval = Minimax(childState, depth - 1, alpha, beta, true);
-                minEval = Mathf.Min(minEval, eval);
-                beta = Mathf.Min(beta, eval);
-                if (beta <= alpha)
+                currentState.canP1MoveAgain = false;
+                int maxEval = -maxValue;
+                foreach (State childState in GetChildStates(currentState, !maximizingPlayer))
                 {
-                    break;
+                    int eval = Minimax(childState, depth - 1, alpha, beta, false);
+                    maxEval = Mathf.Max(maxEval, eval);
+                    alpha = Mathf.Max(alpha, eval);
+                    if (beta <= alpha)
+                    {
+                        break;
+                    }
                 }
+                return maxEval;
             }
-            return minEval;
+            else
+            {
+                int minEval = maxValue;
+                foreach (State childState in GetChildStates(currentState, !maximizingPlayer))
+                {
+                    int eval = Minimax(childState, depth - 1, alpha, beta, true);
+                    minEval = Mathf.Min(minEval, eval);
+                    beta = Mathf.Min(beta, eval);
+                    if (beta <= alpha)
+                    {
+                        break;
+                    }
+                }
+                return minEval;
+            }
+            
         }
     }
     public int moveAgainWeight = 3;
@@ -147,7 +211,7 @@ public class MinimaxAI : MonoBehaviour
             }
             else
             {
-                staticEvaluator -= (moveAgainWeight / 2);
+                //staticEvaluator -= (moveAgainWeight / 2);
             }
         } 
         else
@@ -165,7 +229,7 @@ public class MinimaxAI : MonoBehaviour
             }
             else
             {
-                staticEvaluator += (moveAgainWeight / 2);
+                //staticEvaluator += (moveAgainWeight / 2);
             }
         }
         //Debug.Log("inside static evaluator: " + staticEvaluator);
@@ -210,6 +274,11 @@ public class MinimaxAI : MonoBehaviour
         State stateCopy = new State(state);
         int[] p1 = stateCopy.p1;
         int[] p2 = stateCopy.p2;
+
+        if (stateCopy.canP1MoveAgain)
+        {
+            stateCopy.canP1MoveAgain = false;
+        }
 
         if (indexOfPit == 6)
         {
@@ -342,6 +411,11 @@ public class MinimaxAI : MonoBehaviour
         State stateCopy = new State(state);
         int[] p1 = stateCopy.p1;
         int[] p2 = stateCopy.p2;
+
+        if (stateCopy.canP2MoveAgain)
+        {
+            stateCopy.canP2MoveAgain = false;
+        }
 
         if (indexOfPit == 6)
         {

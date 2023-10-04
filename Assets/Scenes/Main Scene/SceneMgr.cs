@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneMgr : MonoBehaviour
 {
+
+    
     public static SceneMgr inst;
 
     private void Awake()
@@ -33,6 +35,7 @@ public class SceneMgr : MonoBehaviour
     {
         SceneManager.LoadScene("Tutorial");
     }
+
     public void ChangeSceneToDifficultySelector()
     {
         SceneManager.LoadScene("Difficulty Selector");
@@ -42,8 +45,9 @@ public class SceneMgr : MonoBehaviour
     {
         SceneManager.LoadScene("Mode Selector");
     }
-    public void ChangeSceneToPlayAgainstAI()
+    public void ChangeSceneToPlayAgainstAI(int difficulty)
     {
+        Difficulty.inst.difficulty = difficulty;
         SceneManager.LoadScene("Play Against AI");
     }
 

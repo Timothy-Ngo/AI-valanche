@@ -18,13 +18,18 @@ public class GameMgr : MonoBehaviour
     {
         p1Pits = new List<Pit>(p1PitsParent.GetComponentsInChildren<Pit>());
         p2Pits = new List<Pit>(p2PitsParent.GetComponentsInChildren<Pit>());
+
+        difficultyLevel = Difficulty.inst.difficulty;
     }
 
     [Header("Game Mechanics")]
     public int player = 1;
     public bool moveInAction = false;
     public FirstPersonCamera fpc;
-    
+    public bool againstAI = false;
+    public MinimaxAI ai;
+    public int difficultyLevel = 1;
+    public GameObject inputBlocker;
 
     [Header("State Renderer Settings")]
     public GameObject p1PitsParent;
@@ -44,18 +49,26 @@ public class GameMgr : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !moveInAction)
         {
+            if (player == 1 && inputBlocker.activeSelf)
+            {
+                inputBlocker.SetActive(false);
+            }
             if (SendOutRayCast() )
             {
-                Debug.Log("Raycast hit: " + hit.transform.parent.gameObject.name);
+                //Debug.Log("Raycast hit: " + hit.transform.parent.gameObject.name);
                 int index = GetPitIndex(hit.transform.parent.gameObject);
 
                 if (player == 1)
                 {
                     StateMgr.inst.currentState.P1Move(index);
                 }
-                else if (player ==2)
+                else if (player == 2)
                 {
-                    StateMgr.inst.currentState.P2Move(index);
+                    if (!againstAI)
+                    { 
+                        StateMgr.inst.currentState.P2Move(index);
+                    }
+                  
                 }
             }
         }
@@ -70,6 +83,32 @@ public class GameMgr : MonoBehaviour
         }
 
     }
+
+    public void DelayedPlayAgainstAI(float delay)
+    {
+
+        StartCoroutine(DelayHelperPlayAgainstAI(delay));
+    }
+
+    IEnumerator DelayHelperPlayAgainstAI(float delay)
+    {
+        
+        yield return new WaitForSeconds(delay);
+        UIMgr.inst.UpdatePlayerTurnUI();
+        inputBlocker.SetActive(true);
+        PlayAgainstAI();
+    }
+
+   
+    public void PlayAgainstAI()
+    {
+        if (againstAI)
+        {
+            Debug.Log("Against AI");
+            ai.FindEvaluator(StateMgr.inst.currentState, difficultyLevel, false);
+        }
+    }
+
 
     public bool SendOutRayCast()
     {
@@ -110,7 +149,16 @@ public class GameMgr : MonoBehaviour
         Debug.LogError("Not a valid player");
         return -1; 
     }
-
+    
+    public void DelayedEndGame(float delay, int winner)
+    {
+        StartCoroutine(DelayHelperEndGame(delay, winner));
+    }
+    IEnumerator DelayHelperEndGame(float delay, int winner)
+    {
+        yield return new WaitForSeconds(delay);
+        EndGame(winner);
+    }
 
     public void EndGame(int winner)
     {
