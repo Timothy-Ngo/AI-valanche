@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class Stone : MonoBehaviour
 {
-    Vector3 startPosition;
-    Vector3 endPosition;
-
+    AudioSource audio;
     // Start is called before the first frame update
     void Start()
-    {
-        startPosition = transform.position;
-        endPosition = new Vector3(startPosition.x + 2, startPosition.y, startPosition.z);
+    {            
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Howdy");
+      
+    }
 
-        //transform.position = MathParabola.Parabola(transform.position, endPosition, 
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("stoneSound"))
+            audio.Play();
     }
 }

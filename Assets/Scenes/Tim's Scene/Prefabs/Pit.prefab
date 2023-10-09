@@ -153,6 +153,8 @@ MonoBehaviour:
   - {fileID: 5321595813523389279, guid: 5a033d984165d854693106ff9ebe46bc, type: 3}
   renderedStones: []
   initSpawnInterval: 1
+  numStonesText: {fileID: 0}
+  stonePopsfx: {fileID: 0}
 --- !u!1 &297882502412889099
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +264,7 @@ GameObject:
   - component: {fileID: 297882502769109009}
   m_Layer: 0
   m_Name: 'Floor Boundary '
-  m_TagString: Untagged
+  m_TagString: stoneSound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

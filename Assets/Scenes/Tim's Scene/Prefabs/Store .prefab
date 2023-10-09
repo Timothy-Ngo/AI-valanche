@@ -248,6 +248,8 @@ MonoBehaviour:
   - {fileID: 5321595813523389279, guid: 5a033d984165d854693106ff9ebe46bc, type: 3}
   renderedStones: []
   initSpawnInterval: 1
+  numStonesText: {fileID: 0}
+  stonePopsfx: {fileID: 0}
 --- !u!1 &4526817303324726938
 GameObject:
   m_ObjectHideFlags: 0
