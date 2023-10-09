@@ -73,6 +73,9 @@ public class UIMgr : MonoBehaviour
     public TextMeshProUGUI endScreenUI;
     public GameObject endScreen;
     bool onEndScreen = false;
+
+    public AudioSource winSfx;
+    public AudioSource lostSfx;
     public void DisplayEndScreen()
     {
         onEndScreen = true;
@@ -82,13 +85,20 @@ public class UIMgr : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Play Against AI")
         {
             if (StateMgr.inst.currentState.WhoWon() == 2)
+            {
                 endScreenUI.text = "AI Won!";
+                lostSfx.Play();
+            }
             else
+            {
                 endScreenUI.text = "You Won!";
+                winSfx.Play();
+            }
         } 
         else
         {
             endScreenUI.text = "Player " + StateMgr.inst.currentState.WhoWon().ToString() + " Won!";
+            winSfx.Play();
         }
 
         

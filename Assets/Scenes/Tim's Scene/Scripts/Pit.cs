@@ -21,9 +21,9 @@ public class Pit : MonoBehaviour
 
     public TextMeshProUGUI numStonesText;
 
-    public AudioSource stonePopsfx;
+    public AudioSource stonePopSfx;
 
-    
+    public AudioSource stoneClinkSfx;
 
     // Start is called before the first frame update
     void Start()
@@ -67,12 +67,20 @@ public class Pit : MonoBehaviour
 
     public void AddStone()
     {
-        stonePopsfx.Play();
+        stonePopSfx.PlayOneShot(stonePopSfx.clip);
+        StartCoroutine(DelayStoneClinkSfx(1.25f));
         numberOfStones++;
         renderedStones.Add(Instantiate(stonePrefabs[Random.Range(0,stonePrefabs.Count)], transform));
         numStonesText.text = numberOfStones.ToString();
     }
 
+    IEnumerator DelayStoneClinkSfx(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        stoneClinkSfx.PlayOneShot(stoneClinkSfx.clip);
+    }
+
+    
     public void DelayedClearPit(float delay)
     {
         StartCoroutine(DelayHelperClearPit(delay));

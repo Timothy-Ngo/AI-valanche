@@ -8,6 +8,7 @@ public class GameMgr : MonoBehaviour
 {
     public static GameMgr inst;
 
+    public AudioSource penguinSfx;
     private void Awake()
     {
         inst = this; 
@@ -101,6 +102,7 @@ public class GameMgr : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !moveInAction)
         {
+            penguinSfx.PlayOneShot(penguinSfx.clip);
             if (player == 1 && inputBlocker.activeSelf)
             {
                 inputBlocker.SetActive(false);
@@ -116,12 +118,14 @@ public class GameMgr : MonoBehaviour
 
                 if (player == 1)
                 {
+                    
                     StateMgr.inst.currentState.P1Move(index);
                 }
                 else if (player == 2)
                 {
                     if (!againstAI)
-                    { 
+                    {
+                        
                         StateMgr.inst.currentState.P2Move(index);
                     }
                   
@@ -153,6 +157,7 @@ public class GameMgr : MonoBehaviour
         UIMgr.inst.UpdatePlayerTurnUI();
         inputBlocker.SetActive(true);
         PlayAgainstAI();
+        penguinSfx.PlayOneShot(penguinSfx.clip);
     }
 
    
