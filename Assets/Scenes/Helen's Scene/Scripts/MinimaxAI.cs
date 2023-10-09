@@ -24,6 +24,7 @@ public class MinimaxAI : MonoBehaviour
     }
     private int maxValue = int.MaxValue;
     public int ply = 2;
+
     public void FindEvaluator(State currentState, int depth, bool maximizingPlayer)
     {
         Dictionary<int, int> indexEvalMap = new Dictionary<int, int>();
@@ -74,15 +75,43 @@ public class MinimaxAI : MonoBehaviour
             int minIndex = 0;
             foreach(int index in indexEvalMap.Keys)
             {
-                Debug.Log("index: " + index + ", eval: " + indexEvalMap[index]);
+                //Debug.Log("index: " + index + ", eval: " + indexEvalMap[index]);
                 if (indexEvalMap[index] <= minVal)
                 {
                     minVal = indexEvalMap[index];
                     minIndex = index;
                 }
             }
-            Debug.Log($"minIndex chosen: {minIndex}");
-            StateMgr.inst.currentState.P2Move(minIndex);
+            float randomValue = UnityEngine.Random.value;
+
+            Debug.Log($"Difficulty Level: {GameMgr.inst.difficultyLevel}");
+
+            float aiMoveChance = .25f;
+            switch(GameMgr.inst.difficultyLevel)
+            {
+                case 1:
+                    aiMoveChance = .25f;
+                    break;
+                case 2:
+                    aiMoveChance = .5f;
+                    break;
+                case 3:
+                    aiMoveChance = 1;
+                    break;
+            }
+
+            if (randomValue < (1 - aiMoveChance)) // Random Move
+            {
+
+                List<int> randomIndex = indexEvalMap.Keys.ToList();
+                StateMgr.inst.currentState.P2Move(randomIndex[UnityEngine.Random.Range(0, randomIndex.Count)]);
+                Debug.Log("Random move");
+            }   
+            else // AI move
+            {
+                Debug.Log($"AI Move, minIndex chosen: {minIndex}");
+                StateMgr.inst.currentState.P2Move(minIndex);
+            }
         }
 
         /*

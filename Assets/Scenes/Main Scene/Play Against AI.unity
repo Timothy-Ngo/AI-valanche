@@ -12612,6 +12612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ply: 1
+  aiMoveChanceMultiplier: 0.24
   moveAgainWeight: 0
 --- !u!4 &919782238
 Transform:

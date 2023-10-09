@@ -46,5 +46,17 @@ public class UIMgr : MonoBehaviour
     {
         playerTurnUI.text = "Player " + GameMgr.inst.player;
     }
+
+
+    IEnumerator DelayHelperUpdatePlayerTurnUI(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        UpdatePlayerTurnUI();
+    }
+
+    public void DelayUpdatePlayerTurnUI(float delay)
+    {
+        StartCoroutine(DelayHelperUpdatePlayerTurnUI(delay));
+    }
     
 }

@@ -490,6 +490,7 @@ public class State
                             GameMgr.inst.DelayedPlayAgainstAI(spawnDuration += spawnInterval + 1);
                             canP2MoveAgain = false;
                         }
+                        UIMgr.inst.DelayUpdatePlayerTurnUI(spawnDuration += spawnInterval + 1);
                     }
                     return;
                 }
@@ -533,7 +534,14 @@ public class State
                             CameraMgr.inst.DelayedCameraSwitch(spawnDuration += spawnInterval + 1);
                         }
                         GameMgr.inst.DelayedChangeMoveInAction(spawnDuration += spawnInterval);
-                        CheckEndGame(spawnDuration += spawnInterval + 1);
+                        if (CheckEndState())
+                        {
+                            CheckEndGame(spawnDuration += spawnInterval + 1);
+                        }
+                        else
+                        {
+                            UIMgr.inst.DelayUpdatePlayerTurnUI(spawnDuration += spawnInterval + 1);
+                        }
                         return;
                     }
 
@@ -588,11 +596,19 @@ public class State
                         }
                         else
                         {
-                            if (GameMgr.inst.againstAI && canP2MoveAgain)
+                            if (GameMgr.inst.againstAI)
                             {
-                                GameMgr.inst.DelayedPlayAgainstAI(spawnDuration += spawnInterval + 1);
-                                canP2MoveAgain = false;
+                                if (canP2MoveAgain)
+                                {
+                                    GameMgr.inst.DelayedPlayAgainstAI(spawnDuration += spawnInterval + 1);
+                                    canP2MoveAgain = false;
+                                }
+                                else
+                                {
+                                    UIMgr.inst.DelayUpdatePlayerTurnUI(spawnDuration += spawnInterval + 1);
+                                }
                             }
+                            
                         }
                         return;
                     }
