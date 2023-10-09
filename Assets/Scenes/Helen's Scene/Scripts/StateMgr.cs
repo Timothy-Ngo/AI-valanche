@@ -163,7 +163,7 @@ public class State
 
         if (p1Empty || p2Empty || p1[6] >= 25 || p2[6] >= 25)
         {
-            GameMgr.inst.DelayedEndGame(delay, WhoWon());
+            UIMgr.inst.DisplayEndScreen();
         }
         else
         {

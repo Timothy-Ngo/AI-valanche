@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIMgr : MonoBehaviour
 {
@@ -23,13 +24,22 @@ public class UIMgr : MonoBehaviour
         //p1pit0Transform.Rotate(0f, 0f, 180f, Space.Self);
         //FlipNumbers();
         UpdatePlayerTurnUI();
+        endScreen.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-
+        if (onEndScreen)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneMgr.inst.ChangeSceneToMainMenu();
+                onEndScreen = false;
+                GameMgr.inst.fpc.ReleaseCursor();
+            }
+        }
     }
 
 
@@ -57,6 +67,34 @@ public class UIMgr : MonoBehaviour
     public void DelayUpdatePlayerTurnUI(float delay)
     {
         StartCoroutine(DelayHelperUpdatePlayerTurnUI(delay));
+    }
+
+
+    public TextMeshProUGUI endScreenUI;
+    public GameObject endScreen;
+    bool onEndScreen = false;
+    public void DisplayEndScreen()
+    {
+        onEndScreen = true;
+        Time.timeScale = 0;
+        playerTurnUI.enabled = false;
+        
+        if (SceneManager.GetActiveScene().name == "Play Against AI")
+        {
+            if (StateMgr.inst.currentState.WhoWon() == 2)
+                endScreenUI.text = "AI Won!";
+            else
+                endScreenUI.text = "You Won!";
+        } 
+        else
+        {
+            endScreenUI.text = "Player " + StateMgr.inst.currentState.WhoWon().ToString() + " Won!";
+        }
+
+        
+        endScreen.SetActive(true);
+        
+
     }
     
 }
