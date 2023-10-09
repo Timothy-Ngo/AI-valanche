@@ -20,6 +20,10 @@ public class GameMgr : MonoBehaviour
         p2Pits = new List<Pit>(p2PitsParent.GetComponentsInChildren<Pit>());
 
         difficultyLevel = Difficulty.inst.difficulty;
+        if (againstAI)
+        {
+            inputBlocker.SetActive(false);
+        }
     }
 
     [Header("Game Mechanics")]
@@ -44,8 +48,56 @@ public class GameMgr : MonoBehaviour
     public int p1Layer = 1 << 6;
     public int p2Layer = 1 << 7;
 
+    public MeshRenderer lastHitRenderer = null;
+
     void Update()
     {
+        if (againstAI && player == 2 && !inputBlocker.activeSelf)
+        {
+            Debug.Log("input blocker active");
+            inputBlocker.SetActive(true);
+        }
+        else if (againstAI && player == 1 && inputBlocker.activeSelf)
+        {
+            Debug.Log("input blocker inactive");
+            inputBlocker.SetActive(false);  
+        }
+
+        
+        if (player == 1)
+        {
+            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, rayCastDistance, p1Layer) && !moveInAction)
+            {
+                if (lastHitRenderer != null && lastHitRenderer != hit.collider.gameObject.GetComponent<MeshRenderer>())
+                {
+                    lastHitRenderer.enabled = false;
+                }
+                lastHitRenderer = hit.collider.gameObject.GetComponent<MeshRenderer>();
+                lastHitRenderer.enabled = true;
+            }
+            else
+            {
+                if (lastHitRenderer != null)
+                {
+                    lastHitRenderer.enabled = false;
+                }
+            }
+        }
+        else if (player == 2 && !againstAI)
+        {
+            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, rayCastDistance, p2Layer) && !moveInAction)
+            {
+                lastHitRenderer = hit.collider.gameObject.GetComponent<MeshRenderer>();
+                lastHitRenderer.enabled = true;
+            }
+            else
+            {
+                if (lastHitRenderer != null)
+                {
+                    lastHitRenderer.enabled = false;
+                }
+            }
+        }
 
         if (Input.GetMouseButtonDown(0) && !moveInAction)
         {
@@ -55,6 +107,10 @@ public class GameMgr : MonoBehaviour
             }
             if (SendOutRayCast() )
             {
+                if (lastHitRenderer!= null)
+                {
+                    lastHitRenderer.enabled = false;
+                }
                 //Debug.Log("Raycast hit: " + hit.transform.parent.gameObject.name);
                 int index = GetPitIndex(hit.transform.parent.gameObject);
 

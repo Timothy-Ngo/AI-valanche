@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class Pit : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class Pit : MonoBehaviour
 
     public AudioSource stonePopsfx;
 
+    
 
     // Start is called before the first frame update
     void Start()
@@ -34,16 +36,7 @@ public class Pit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Debug.Log("C key pressed");
-            ClearPit();
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Debug.Log("S keypressed");
-            Init();
-        }
+       
         
     }
 

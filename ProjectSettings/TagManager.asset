@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - stoneSound
+  - Selection
   layers:
   - Default
   - TransparentFX

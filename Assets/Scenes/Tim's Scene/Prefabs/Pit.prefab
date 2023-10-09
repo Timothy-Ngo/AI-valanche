@@ -262,9 +262,10 @@ GameObject:
   - component: {fileID: 297882502769109015}
   - component: {fileID: 297882502769109014}
   - component: {fileID: 297882502769109009}
+  - component: {fileID: 2279756548381802594}
   m_Layer: 0
   m_Name: 'Floor Boundary '
-  m_TagString: stoneSound
+  m_TagString: Selection
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -345,6 +346,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2279756548381802594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297882502769109011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb999b8d94ee754caaca442db8af3f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &297882502852115377
 GameObject:
   m_ObjectHideFlags: 0
