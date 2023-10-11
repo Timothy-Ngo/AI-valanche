@@ -120,6 +120,7 @@ public class GameMgr : MonoBehaviour
                 {
                     
                     StateMgr.inst.currentState.P1Move(index);
+                    
                 }
                 else if (player == 2)
                 {
@@ -127,8 +128,9 @@ public class GameMgr : MonoBehaviour
                     {
                         
                         StateMgr.inst.currentState.P2Move(index);
+                        
                     }
-                  
+
                 }
             }
         }
