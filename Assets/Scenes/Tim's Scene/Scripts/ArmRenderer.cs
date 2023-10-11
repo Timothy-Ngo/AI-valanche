@@ -26,7 +26,6 @@ public class ArmRenderer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             MoveArmForward();
-            StartCoroutine(DelayedMoveArmBack());
         }
     }
 
@@ -44,10 +43,10 @@ public class ArmRenderer : MonoBehaviour
         }
     }
 
-    IEnumerator DelayedMoveArmBack()
+    IEnumerator DelayedMoveArmBack(int player)
     {
         yield return new WaitForSeconds(0.5f);
-        MoveArmBack();
+        MoveArmBack(player);
     }
 
     public void MoveArmForward()
@@ -55,21 +54,25 @@ public class ArmRenderer : MonoBehaviour
         if (GameMgr.inst.player == 1)
         {
             armRender1.transform.localPosition += Vector3.forward * distance;
+            armIsForward = true;
+            StartCoroutine(DelayedMoveArmBack(1));
         }
-        else if (GameMgr.inst.player == 2)
+        else if (GameMgr.inst.player == 2 && !GameMgr.inst.againstAI)
         {
             armRender2.transform.localPosition += Vector3.forward * distance;
+            armIsForward = true;
+            StartCoroutine(DelayedMoveArmBack(2));
         }
-        armIsForward = true;
+        
     }
 
-    public void MoveArmBack()
+    public void MoveArmBack(int i )
     {
-        if (GameMgr.inst.player == 1)
+        if (i == 1)
         {
             armRender1.transform.localPosition -= Vector3.forward * distance;
         }
-        else if (GameMgr.inst.player == 2)
+        else if (i == 2)
         {
             armRender2.transform.localPosition -= Vector3.forward * distance;
         }
